@@ -1,0 +1,662 @@
+---
+title: "Prática de atividades físicas dos alunos do CCNE da UFSM"
+author:
+  - Dyannder Porciuncula
+  - João Inácio Scrimini
+  - Joelmir Junior
+  - Jonathan Tavares
+  - Matheus Borges
+abstract: "A seguinte pesquisa tem por objetivo avaliar o nível e perfil de atividade física de alunos do Centro de Ciências
+header-includes:
+   - \usepackage[brazil]{babel}
+   - \usepackage{bm}
+   - \usepackage{float}
+geometry: left=1.7cm, right=1.7cm, top=3cm, bottom=3cm
+output:
+  bookdown::pdf_document2:
+editor_options:
+  chunk_output_type: console
+indent: true
+---
+
+```{r setup, include=F}
+
+options(digits = 3)  
+# options(scipen = 999)
+ggplot2::theme_set(ggplot2::theme_minimal()) 
+knitr::opts_chunk$set(echo=F, message=F, warning=F, fig.pos = 'H', 
+                      fig.align = 'center', fig.width = 6, fig.height= 3.4)
+library(tidyverse)
+library(tidyselect)
+source("R/functions/knit_kable.R")
+```
+
+# Introdução
+\ \par
+
+Com esta pesquisa espera-se entender o comportamento dos estudantes do Centro de Ciencias Naturais (CCNE) e Exatas da Universidade Federal de Santa Maria (UFSM) no que diz respeito as atividades físicas. Visando entender o perfil dos alunos e o nível de saúde. 
+Segundo o [MACEDO et al (2012)](https://rbafs.org.br/RBAFS/article/view/875) os quais aplicaram o questionário Short Form 36 (SF-36),  instrumento de qualidade de vida (QV) multidimensional desenvolvido em 1992 por Ware e Sherbourne e validado no Brasil por Ciconelli et al. É confirmado que há benefícios s qualidade de vida para os que praticam exercícios físicos.
+ 	Neste cenário,  universidade dispõe de grupos de atividades físicas, com programas como o [Programa Segundo Tempo](https://www.ufsm.br/2022/05/23/ufsm-passara-a-oferecer-o-programa-segundo-tempo-voltado-a-pratica-de-atividades-fisicas/), que disponibiliza diversas modalidades esportivas, com o intuito de promover saúde. Além, de estar investindo em uma [academia de musculação](https://www.ufsm.br/2022/08/29/ufsm-tera-academia-de-musculacao-no-cefd/) promovendo assim a atividade física e a saúde.
+	Esse trabalho, tem por finalidade analisar e identificas a relação atividade física e saúde no CCNE, bem como avaliar IMC e os turnos mais afetados pela falta de uma vida ativa. Dessa forma, objetiva-se contribuir de maneira teórica-reflexiva, a partir do questionário aplicado aos alunos estudados, quanto a situação de sua saúde relacionada a sua pratica de exercícios.
+
+# Objetivos
+
+## Objetivo Geral
+\ \par
+
+Avaliar o nível e perfil de atividade física de alunos do Centro de Ciências Naturais e Exatas (CCNE) da Universidade Federal de Santa Maria (UFSM).
+
+## Objetivo Específico
+\ \par
+
+- Identificar o nível de saúde dos alunos do CCNE em relação a pratica de atividades físicas;
+
+- Identificação dos cursos do CCNE e turnos que os alunos são mais afetados com a falta de atividades físicas;
+
+- Identificar o IMC dos alunos, buscando verificar se os alunos se encontram no peso ideal;
+
+- Classificação do nível de atividade física dos alunos do CCNE; (sedentário, ativo, muito ativo, ...)
+
+- Verificar a importância dada pelos alunos do CCNE para atívidades físicas.
+
+# Estudo
+\ \par
+
+Será realizado amostragem não probabilística por conveniência, sendo questionário respondido pela internet. No qual, o indivíduo decide se quer ou não responder o questionário, não havendo uma seleção aleatória antes. Algumas das vantagens são: baixo custo, maior alcance, melhor retorno, menor tempo.
+
+A população alvo do estudo são todos os alunos que cursam algum curso do CCNE, tanto do turno diurno ou noturno, da UFSM. Possuindo cerca de mais de 2 mil alunos matriculados regularmente. 
+
+Os alunos participarão da pesquisa de livre e espontanea vontade. Assim, todo indivíduo que não concorde ou não se sinta a vontade de responder o questionário, não precisará participar da pesquisa.  
+
+Com os questionários respondidos, obteremos um banco de dados em formato tabular. Pelo qual, iremos realiar as análises pelo \textit{software} Team Core R (2022). 
+
+Para a análises estatísticas iremos realizar por meio tabelas e gráficos. E buscando algum tipo de associação entre as variáveis qualitativas (variáveis quantitativas serão categorizadas para possível verificação de associação) será realizado o Teste Qui-Quadrado de independência ou Teste Exato de Fisher. Aplicação de técnicas multivariadas caso seja aplicável e viável.
+
+# Análise Descritiva
+\ \par
+Nesta seção, iremos apresentar as análises descritivas para os dados obtidos neste estudo, por meio do questionário aplicado para a pesquisa referente ao nível de atividade física dos alunos do CCNE, utilizando tabelas e gráficos. Com a aplicação do questionário foram obtidas apenas 39 respostas, contudo, dentre essas, 4 tiveram de ser removidas pelos seguintes fatos: apenas uma resposta foi de um curso diurno e esse foi removido para que não houvesse alguma relação que não poderia ser explicada pelos dados com os turnos dos cursos, enquanto as 3 demais foram removidas pois haviam respostas incongruentes para as perguntas (os entrevistados disseram que exercitavam-se nenhuma vez na semana, mas colocaram carga horária de exercício físico semanal) de atividades físicas que servem como base para determinar se uma pessoa é fisicamente ativa ou não. Sendo assim, essas respostas incongruentes foram categorizadas como erro de resposta do entrevistado, portanto não era possível utilizá-las nas análises.
+
+A seguir, é apresentada a descrição das variáveis:
+
+\ \par
+
+Genero $\Rightarrow$ "Gênero:"\par
+Curso $\Rightarrow$ "Curso de graduação:"\par
+Turno $\Rightarrow$ "Turno do curso:"\par
+Idade $\Rightarrow$ "Idade:"\par
+Altura $\Rightarrow$ "Altura (cm):"\par
+Peso $\Rightarrow$ "Peso (kg):"\par
+P1 $\Rightarrow$ "Em média, quantas horas por dia você dorme?"\par
+P2 $\Rightarrow$ "Quantas horas semanais você trabalha? (Contando emprego e/ou bolsa)"\par
+P3 $\Rightarrow$ "De forma geral, como você considera que está sua saúde física?"\par
+P4 $\Rightarrow$ "Você faz parte de algum grupo de atividades físicas (atléticas, equipes, grupos de corrida, etc.)?"\par
+P5 $\Rightarrow$ "Em média, qual sua carga semanal de atividades físicas? (em horas)"\par
+P6 $\Rightarrow$ "Quantas vezes, na semana, você pratica alguma atividade física?"\par
+P7 $\Rightarrow$ "Quanto você considera importante a prática de atividades físicas na rotina de um estudante?"\par
+P8 $\Rightarrow$ "Você já participou de alguma competição desportiva?"\par
+P9 $\Rightarrow$ "Você acharia interessante participar de alguma competição desportiva de integração entre os cursos do CCNE, caso houvesse?"\par
+P10 $\Rightarrow$ "Caso a resposta na pergunta anterior tenha sido \"Sim\" ou \"Talvez\", quais atividades você participaria?"\par
+P11 $\Rightarrow$ "Você utiliza alguma área destinada a atividade física no campus da UFSM?"\par
+P12 $\Rightarrow$ "Você sente falta de mais áreas destinadas a atividade física no campus?"\par
+P13 $\Rightarrow$ "Você tem algum problema de saúde que impeça ou dificulte a realização de atividades físicas?"\par
+IMC $\Rightarrow$ "Índice de massa corporal dos alunos."\par
+Fisicamente Ativo $\Rightarrow$ "O aluno é considerado \"ativo\" ou \"não ativo\" segundo a definição da OMS."
+
+\ \par
+
+```{r}
+# Data <- "Carimbo de data/hora"
+# Genero <- "Gênero:"
+# Curso <- "Curso de graduação:"
+# Turno <- "Turno do curso:"
+# Idade <- "Idade:"
+# Altura <- "Altura (cm):"
+# Peso <- "Peso (kg):"
+# P1 <- "Em média, quantas horas por dia você dorme?"
+# P2 <- "Quantas horas semanais você trabalha? (Contando emprego e/ou bolsa)"
+# P3 <- "De forma geral, como você considera que está sua saúde física?"
+# P4 <- "Você faz parte de algum grupo de atividades físicas (atléticas, equipes, grupos de corrida, etc.)?"
+# P5 <- "Em média, qual sua carga semanal de atividades físicas? (em horas)"
+# P6 <- "Quantas vezes, na semana, você pratica alguma atividade física?"
+# P7 <- "Quanto você considera importante a prática de atividades físicas na rotina de um estudante?"
+# P8 <- "Você já participou de alguma competição desportiva?"
+# P9 <- "Você acharia interessante participar de alguma competição desportiva de integração entre os cursos do CCNE, caso houvesse?"
+# P10 <- "Caso a resposta na pergunta anterior tenha sido \"Sim\" ou \"Talvez\", quais atividades você participaria?"
+# P11 <- Você utiliza alguma área destinada a atividade física no campus da UFSM?"
+# P12 <- "Você sente falta de mais áreas destinadas a atividade física no campus?"
+# P13 <- "Você tem algum problema de saúde que impeça ou dificulte a realização de atividades físicas"
+
+# coment <- "Diga o que quiser..."
+```
+
+Na Tabela \ref{tab:tab1} são apresentadas as análises descritivas das variáveis quantitativas em estudo, divididas em duas categorias: os alunos fisicamente ativos e os alunos que não são fisicamente ativos. Em relação à variável altura não apresentam-se valores muito diferentes dentre os grupos. Para a idade, novamente não apresentam-se valores muito distantes entre ativos ou não ativos. Para P2, vemos que ativo apresentou um mínimo de 4 horas trabalhadas semanais, já em não ativo houve mínima de 8 horas.
+
+Para a variável P5 observa-se uma grande diferença nos valores, com a média apresentando 0.20 h de carga semanal para não ativos, com mínimo e máximo de 0 e 1 h, respectivamente. Já para fisicamente ativos, observa-se média de atividade semanal de 5.88 h, com mínimo de 5 h e máximo de 10 h. Essa variável, inevitavelmente, sofre de autocorrelação com a definição do que é ser fisicamente ativo, afinal de contas, portanto era esperado que os resultados seriam amplamente diferentes.
+
+Por fim, quanto ao peso, nota-se que o máximo de peso dos alunos ativos é de 129 Kg, já para não ativos é tem-se 90 Kg. As medidas de média e mínimo apresentam-se maiores também para os alunos fisicamente ativos. Isso nos mostra como as pessoas com o peso um pouco mais elevado, vem se preocupando com a saúde e buscando realizar atividades físicas.
+
+
+
+```{r tab1}
+## Importação inicial
+df_original <- readxl::read_xlsx("Dados/atv_fis_ufsm_ajustado_v2.xlsx")
+
+## Removendo observações
+df <- df_original %>% 
+  filter(P5 != "REMOVER", # REMOVE PESSOAS QUE PRATICAM ATV "NENHUMA VEZ",
+                          # MAS TÊM HORAS DE ATIVIDADES
+         Turno != "Diurno") # REMOVE A ÚNICA OBSERVAÇÃO DO DIURNO
+
+## Definindo os grupos
+df <- df %>% 
+  mutate(P5 = as.numeric(P5),
+         fisicamente_ativo = ifelse(P5 >= 2.5, "Sim", "Não"))
+df$P7<-as.factor(df$P7)
+df$P3<-as.factor(df$P3)
+
+## Sumarização
+df %>% 
+  tidyr::pivot_longer(cols = where(is.numeric),
+                      names_to = "variavel_num",
+                      values_to = "valores_num") %>%
+  group_by(variavel_num, fisicamente_ativo) %>% 
+  summarise(`Média` = mean(valores_num, na.rm = T),
+            `Desvio-Padrão` = sd(valores_num, na.rm = T),
+            `Mínimo` = min(valores_num, na.rm = T),
+            Mediana = median(valores_num, na.rm = T),
+            `Máximo` = max(valores_num, na.rm = T)) %>% 
+  mutate(across(.cols = 3:4, round, 2)) %>% 
+  rename(`Variável` = variavel_num,
+         `Fisicamente Ativo` = fisicamente_ativo) %>% 
+  knit_kable(caption = "Estatísticas descritivas das variáveis quantitativas.")
+```
+
+Para a Tabela \ref{tab:tab2} são apresentadas as frequências absolutas e relativas das variáveis qualitativas em estudo cruzadas com a variável resposta fisicamente ativo. Primeiramente acabamos tendo alunos somente do turno noturno, com isso 25 são considerados ativos e 10 não são. Dos cursos obtivemos respostas apenas para estatística e matemática, representando 21 e 4 alunos ativos, respectivamente. Em gênero temos a maioria do sexo masculino, com 21 alunos, sendo 17 ativos. Para o IMC, a maioria dos alunos apresentam-se no peso ideal, 20 alunos, sendo 16 ativos. Apenas 1 está abaixo e sendo ativo. Acima do peso são 14 alunos, 8 sendo ativos.   
+
+Para a variável P1, vemos que a maioria dos alunos dormem em média 6-7 h (sendo 20 alunos) e destes são 13 alunos fisicamente ativos. Poucos alunos conseguem dormir mais de 8 h diárias, apenas 10 alunos dos 35, um fator que pode ser prejudicial para a saúde física e mental dos alunos. Em P11, nota-se que poucos utilizam áreas da UFSM para praticar atividades físicas, apenas 8, sendo destes, 6 que são considerados fisicamente ativos. 
+
+Para a pergunta 4 (P4), obtivemos 8 alunos participando de algum grupo de atividades físicas, sendo destes 7 ativos. Em P6, a maioria pratica atividades físicas 4 a 6 vezes na semana, 17 alunos, todos ativos. Quanto aos alunos que praticam de 1 a 3 vezes na semana, alguns ainda são considerados não ativos, segundo a definição da OMS. 
+
+Para a variável P7, vemos que praticamente todos os alunos consideram bem importante a prática de atividades físicas, com nota menor de 3, de apenas 2 alunos, o todo o restante considera em 4 ou 5 a importância (importante ou muito importante, respectivamente). Em P8, observa-se que muitos alunos já participaram de alguma competição desportiva, representando 25 alunos, 18 destes sendo ativos. E por fim, quanto a pergunta P9, percebe-se que 22 (63 %) dos alunos participariam de competição desportivas caso tivessem no CCNE, e 6 pensariam na possibilidade de participar, apenas 7 (20 %) não participariam.
+
+
+
+
+
+```{r }
+# categorização de idade, altura e peso:
+df1<- df |> 
+  select(Idade,Peso,Altura,P2,P5) |> 
+  mutate(Fx_Idade = cut(Idade,breaks=c(seq(18,58,8)),include.lowest = T),
+         IMC = Peso/((Altura/100)*(Altura/100)),
+         Fx_P2 = cut(P2,breaks=c(4,10,20,30,40,56),include.lowest = T),
+         Fx_P5 = cut(P5,breaks=c(seq(0,10,2)),include.lowest = T)) |> 
+  mutate(Fx_IMC = case_when(
+                           IMC >= 18.5 & IMC <= 24.9 ~ "Ideal",
+                           IMC < 18.5 ~ "Abaixo",
+                           IMC > 24.9 ~ "Acima")) |> 
+  mutate(Fx_IMC = forcats::fct_relevel(Fx_IMC,"Abaixo","Ideal","Acima")) |> 
+  select(-c(Idade,Peso,Altura,P2,P5))
+
+df<-cbind(df,IMC = df1$Fx_IMC)
+```
+
+```{r,eval=FALSE}
+df %>%
+  select(!where(is.numeric), -Data, -coment, -P10) %>%
+  tidyr::pivot_longer(cols = !fisicamente_ativo,
+                      names_to = "variavel_quali",
+                      values_to = "valores_quali") %>%
+  group_by(variavel_quali, fisicamente_ativo) %>%
+  count(valores_quali) %>% 
+  tidyr::pivot_wider(names_from = fisicamente_ativo,
+                     names_prefix = "ativo_",
+                     values_from = n) %>%
+  group_by(variavel_quali) %>% 
+  mutate(ativo_Não = ifelse(is.na(`ativo_Não`), 0, `ativo_Não`),
+         ativo_Sim = ifelse(is.na(`ativo_Sim`), 0, `ativo_Sim`),
+         `Não Ativo2` = scales::percent(`ativo_Não`/sum(`ativo_Não`, na.rm = T), accuracy = 0.01,suffix = ""),
+         `Ativo2` = scales::percent(`ativo_Sim`/sum(`ativo_Sim`, na.rm = T), accuracy = 0.01,suffix = "")) %>% 
+  rename(`Não Ativo` = `ativo_Não`,
+         `Ativo` = `ativo_Sim`,
+         `Variável` = variavel_quali,
+         `Resposta` = valores_quali) %>% 
+  knit_kable(caption = "Frequências das variáveis qualitativas agrupadas por grupos fisicamente ativos.")
+
+
+```
+
+
+
+\begin{table}[H]
+
+\caption{\label{tab:tab2}Frequências das variáveis qualitativas agrupadas por grupos fisicamente ativos.}
+\centering
+\fontsize{12}{14}\selectfont
+\begin{tabular}[t]{cccccc}
+\toprule
+Variável & Resposta & Não Ativo & Ativo & Não Ativo (\%) & Ativo (\%)\\
+\midrule
+\cellcolor{gray!6}{Curso} & \cellcolor{gray!6}{Estatística} & \cellcolor{gray!6}{8} & \cellcolor{gray!6}{21} & \cellcolor{gray!6}{80.00} & \cellcolor{gray!6}{84.00}\\
+Curso & Matemática & 2 & 4 & 20.00 & 16.00\\
+\cellcolor{gray!6}{Genero} & \cellcolor{gray!6}{Feminino} & \cellcolor{gray!6}{6} & \cellcolor{gray!6}{8} & \cellcolor{gray!6}{60.00} & \cellcolor{gray!6}{32.00}\\
+Genero & Masculino & 4 & 17 & 40.00 & 68.00\\
+\cellcolor{gray!6}{IMC} & \cellcolor{gray!6}{Acima} & \cellcolor{gray!6}{6} & \cellcolor{gray!6}{8} & \cellcolor{gray!6}{60.00} & \cellcolor{gray!6}{32.00}\\
+\addlinespace
+IMC & Ideal & 4 & 16 & 40.00 & 64.00\\
+\cellcolor{gray!6}{IMC} & \cellcolor{gray!6}{Abaixo} & \cellcolor{gray!6}{0} & \cellcolor{gray!6}{1} & \cellcolor{gray!6}{0.00} & \cellcolor{gray!6}{4.00}\\
+P1 & 10h ou mais & 1 & 0 & 10.00 & 0.00\\
+\cellcolor{gray!6}{P1} & \cellcolor{gray!6}{4 - 5h} & \cellcolor{gray!6}{1} & \cellcolor{gray!6}{3} & \cellcolor{gray!6}{10.00} & \cellcolor{gray!6}{12.00}\\
+P1 & 6 - 7h & 7 & 13 & 70.00 & 52.00\\
+\addlinespace
+\cellcolor{gray!6}{P1} & \cellcolor{gray!6}{8 - 9h} & \cellcolor{gray!6}{1} & \cellcolor{gray!6}{8} & \cellcolor{gray!6}{10.00} & \cellcolor{gray!6}{32.00}\\
+P1 & 3h ou menos & 0 & 1 & 0.00 & 4.00\\
+\cellcolor{gray!6}{P11} & \cellcolor{gray!6}{Não} & \cellcolor{gray!6}{8} & \cellcolor{gray!6}{19} & \cellcolor{gray!6}{80.00} & \cellcolor{gray!6}{76.00}\\
+P11 & Sim & 2 & 6 & 20.00 & 24.00\\
+\cellcolor{gray!6}{P12} & \cellcolor{gray!6}{Não} & \cellcolor{gray!6}{4} & \cellcolor{gray!6}{9} & \cellcolor{gray!6}{40.00} & \cellcolor{gray!6}{36.00}\\
+\addlinespace
+P12 & Sim & 1 & 10 & 10.00 & 40.00\\
+\cellcolor{gray!6}{P12} & \cellcolor{gray!6}{Talvez} & \cellcolor{gray!6}{5} & \cellcolor{gray!6}{6} & \cellcolor{gray!6}{50.00} & \cellcolor{gray!6}{24.00}\\
+P13 & Não & 7 & 21 & 70.00 & 84.00\\
+\cellcolor{gray!6}{P13} & \cellcolor{gray!6}{Sim} & \cellcolor{gray!6}{3} & \cellcolor{gray!6}{4} & \cellcolor{gray!6}{30.00} & \cellcolor{gray!6}{16.00}\\
+P3 & 1 & 2 & 2 & 20.00 & 8.00\\
+\addlinespace
+\cellcolor{gray!6}{P3} & \cellcolor{gray!6}{2} & \cellcolor{gray!6}{3} & \cellcolor{gray!6}{1} & \cellcolor{gray!6}{30.00} & \cellcolor{gray!6}{4.00}\\
+P3 & 3 & 4 & 6 & 40.00 & 24.00\\
+\cellcolor{gray!6}{P3} & \cellcolor{gray!6}{4} & \cellcolor{gray!6}{1} & \cellcolor{gray!6}{7} & \cellcolor{gray!6}{10.00} & \cellcolor{gray!6}{28.00}\\
+P3 & 5 & 0 & 9 & 0.00 & 36.00\\
+\cellcolor{gray!6}{P4} & \cellcolor{gray!6}{Não} & \cellcolor{gray!6}{9} & \cellcolor{gray!6}{18} & \cellcolor{gray!6}{90.00} & \cellcolor{gray!6}{72.00}\\
+\addlinespace
+P4 & Sim & 1 & 7 & 10.00 & 28.00\\
+\cellcolor{gray!6}{P6} & \cellcolor{gray!6}{1 a 3 vezes} & \cellcolor{gray!6}{2} & \cellcolor{gray!6}{7} & \cellcolor{gray!6}{20.00} & \cellcolor{gray!6}{28.00}\\
+P6 & Nenhuma vez & 8 & 0 & 80.00 & 0.00\\
+\cellcolor{gray!6}{P6} & \cellcolor{gray!6}{4 a 6 vezes} & \cellcolor{gray!6}{0} & \cellcolor{gray!6}{17} & \cellcolor{gray!6}{0.00} & \cellcolor{gray!6}{68.00}\\
+P6 & Todos os dias & 0 & 1 & 0.00 & 4.00\\
+\addlinespace
+\cellcolor{gray!6}{P7} & \cellcolor{gray!6}{3} & \cellcolor{gray!6}{1} & \cellcolor{gray!6}{1} & \cellcolor{gray!6}{10.00} & \cellcolor{gray!6}{4.00}\\
+P7 & 4 & 3 & 7 & 30.00 & 28.00\\
+\cellcolor{gray!6}{P7} & \cellcolor{gray!6}{5} & \cellcolor{gray!6}{6} & \cellcolor{gray!6}{17} & \cellcolor{gray!6}{60.00} & \cellcolor{gray!6}{68.00}\\
+P8 & Não & 3 & 7 & 30.00 & 28.00\\
+\cellcolor{gray!6}{P8} & \cellcolor{gray!6}{Sim} & \cellcolor{gray!6}{7} & \cellcolor{gray!6}{18} & \cellcolor{gray!6}{70.00} & \cellcolor{gray!6}{72.00}\\
+\addlinespace
+P9 & Não & 3 & 4 & 30.00 & 16.00\\
+\cellcolor{gray!6}{P9} & \cellcolor{gray!6}{Sim} & \cellcolor{gray!6}{4} & \cellcolor{gray!6}{18} & \cellcolor{gray!6}{40.00} & \cellcolor{gray!6}{72.00}\\
+P9 & Talvez & 3 & 3 & 30.00 & 12.00\\
+\cellcolor{gray!6}{Turno} & \cellcolor{gray!6}{Noturno} & \cellcolor{gray!6}{10} & \cellcolor{gray!6}{25} & \cellcolor{gray!6}{100.00} & \cellcolor{gray!6}{100.00}\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Pelas Figuras \ref{fig:fig1}, \ref{fig:fig2} e \ref{fig:fig3} são apresentados gráficos de barras com as marginais-linha relativas das variáveis em estudo, associadas com a variável de desfecho \"Fisicamente ativo\". O cálculo das marginais-linha relativas referem-se à comparação de cada subgrupo da variável em estudo comparada com o desfecho, onde temos a porcentagem referente a cada subgrupo, por isso o nome marginais-linha, portanto, é relacionado a cada linha (subgrupo) da variável, fechando os 100 \% em cada subgrupo. Desta forma, é possível identificar visualmente se existe alguma possibilidade de diferença entre cada subgrupo da variável estudada, logo, a identificação de alguma associação, desde que o número de observações em cada subgrupo seja suficiente para isso. Como o banco de dados em estudo apresenta apenas 35 observações, existe grande possibilidade de ocorrerem subgrupos com pouquíssimos ou até nenhuma observação, assim prejudicando as análises.  
+
+Portanto, na Figura \ref{fig:fig1}, nota-se nitidamente a igualdade de cada subgrupo para as variáveis Curso e P11. Ainda, os cursos de matemática e estatística apresentam proporções similares para alunos ativos e não ativos. Da mesma forma, para P11 ("Você utiliza alguma área destinada a atividade física no campus da UFSM?") não existe visualmente diferença entre utilizar alguma área da UFSM para se exercitar.
+
+Para Gênero, consegue-se visualizar alguma diferença visualmente, sendo o gênero masculino mais fisicamente ativo que o gênero feminino. Mas considerando a baixa quantidade de observações do banco e que nos dois subgrupos existem mais pessoas ativas que não ativas, esse diferença pode não ser muito relativa nos testes de hipótese. Em P12, e P13, conseguimos notar comportamento similar com o que foi visto em Gênero, uma pequena diferença entre os subgrupos, mas considerando o valor amostral baixo, não temos uma diferença muito discrepante. 
+
+Na variável P1 ("Em média, quantas horas por dia você dorme?"), a diferença mais discrepante é para pessoas que dormem 10 h ou mais, sendo pessoas que não são consideradas ativas. Porém sempre lembrando o desbalanceamento dos subgrupos, por conta de baixa quantidade de pessoas.
+
+Analisando agora a Figura \ref{fig:fig2}, a variável P3 ("De forma geral, como você considera que está sua saúde física?"), identificamos visualmente uma possivel associação, na qual, conforme aumenta a consideração da saúde física dos alunos, maior se torna a porcentagem de alunos fisicamentes ativos. Somente para a consideração de nota "1" temos um empate. 
+
+Para as outras variáveis desta figura não conseguimos prescrever nenhum tipo de discrepância entre os subgrupos, a não ser na variável P6 ("Quantas vezes, na semana, você pratica alguma atividade física?") que apenas no subgrupo "nenhuma vez" vemos o inverso dos demais subgrupos, onde fisicamente ativo "Não" é 100%. O que é de se esperar pela pergunta, que é totalmente correlacionada com a variável resposta, pessoas que não praticam atividades físicas nenhuma vez na semana não tem como serem consideradas ativas.
+
+Por fim, analisando a Figura \ref{fig:fig3}, na Faixa etária a maioria dos alunos apresentaram-se entre as idades de 18 até 34 anos (as duas primeiras faixas etárias), que é onde percebemos uma igualdade das percentagem de pessoas fisicamente ativas, nas demais faixas foram muito poucas observações contidas, prejudicando a análise. Em P2 "Quantas horas semanais você trabalha? (Contando emprego e/ou bolsa)", não é possível idenficar nenhuma discrepância entre os subgrupos. Para o IMC ocorreu novamente o caso de não ter muitas observações em algum subgrupo, no caso, o subgrupo "Abaixo" que apresentou apenas uma observação, sendo fisicamente ativo. Desta forma, não temos como inferir que conforme o aumento do IMC, menor é a quantidade de alunos fisicamente ativos, pelo menos não visualmente. 
+
+Já na variável P5 ("Em média, qual sua carga semanal de atividades físicas? (em horas)"), outra variável totalmente correlacionada com a variável resposta. Observa-se que pessoas que apresentam carga semanal de no máximo 2 h não são consideradas fisicamente ativas.
+
+
+```{r fig1, fig.width = 9, fig.height= 10,fig.cap="Frequência realtiva de alunos por categorias (marginais-linha) das variáveis em estudo. (parte 1)"}
+v1<-round(prop.table(table(df$Curso,df$fisicamente_ativo),1)*100,2)
+v2<-round(prop.table(table(df$Genero,df$fisicamente_ativo),1)*100,2)
+v3<-round(prop.table(table(df$P1,df$fisicamente_ativo),1)*100,2)
+v4<-round(prop.table(table(df$P11,df$fisicamente_ativo),1)*100,2)
+v5<-round(prop.table(table(df$P12,df$fisicamente_ativo),1)*100,2)
+v6<-round(prop.table(table(df$P13,df$fisicamente_ativo),1)*100,2)
+v7<-round(prop.table(table(df$P4,df$fisicamente_ativo),1)*100,2)
+v8<-round(prop.table(table(df$P6,df$fisicamente_ativo),1)*100,2)
+v9<-round(prop.table(table(df$P7,df$fisicamente_ativo),1)*100,2)
+v10<-round(prop.table(table(df$P8,df$fisicamente_ativo),1)*100,2)
+v11<-round(prop.table(table(df$P9,df$fisicamente_ativo),1)*100,2)
+
+g1<-grafbarcomb(d = v1,legx = "Curso",legy = "Percentual de alunos por curso",legl = "Fisicamente Ativo:")
+g2<-grafbarcomb(d = v2,legx = "Gênero",legy = "Percentual de alunos por gênero",legl = "Fisicamente Ativo:")
+g3<-grafbarcomb(d = v3,legx = "P1",legy = "Percentual de alunos por P1",legl = "Fisicamente Ativo:")
+g4<-grafbarcomb(d = v4,legx = "P11",legy = "Percentual de alunos por P11",legl = "Fisicamente Ativo:")
+g5<-grafbarcomb(d = v5,legx = "P12",legy = "Percentual de alunos por P12",legl = "Fisicamente Ativo:")
+g6<-grafbarcomb(d = v6,legx = "P13",legy = "Percentual de alunos por P13",legl = "Fisicamente Ativo:")
+
+cowplot::plot_grid(g1,g2,g3,g4,g5,g6,ncol = 2)
+```
+
+```{r fig2, fig.width = 9, fig.height= 10,fig.cap="Frequência realtiva de alunos por categorias (marginais-linha) das variáveis em estudo. (parte 2)"}
+v12<-round(prop.table(table(df1$Fx_Idade,df$fisicamente_ativo),1)*100,2)
+v16<-round(prop.table(table(df$P3,df$fisicamente_ativo),1)*100,2)
+
+g16 <- grafbarcomb(d = v16,legx = "P3",legy = "Percentual de alunos por P3",legl = "Fisicamente Ativo:")
+g7<-grafbarcomb(d = v7,legx = "P4",legy = "Percentual de alunos por P4",legl = "Fisicamente Ativo:")
+g8<-grafbarcomb(d = v8,legx = "P6",legy = "Percentual de alunos por P6",legl = "Fisicamente Ativo:")
+g9<-grafbarcomb(d = v9,legx = "P7",legy = "Percentual de alunos por P7",legl = "Fisicamente Ativo:")
+g10<-grafbarcomb(d = v10,legx = "P8",legy = "Percentual de alunos por P8",legl = "Fisicamente Ativo:")
+g11<-grafbarcomb(d = v11,legx = "P9",legy = "Percentual de alunos por P9",legl = "Fisicamente Ativo:")
+
+cowplot::plot_grid(g16,g7,g8,g9,g10,g11,ncol = 2)
+```
+
+
+
+```{r fig3, fig.width = 9, fig.height= 6.5,fig.cap="Frequência realtiva de alunos por categorias (marginais-linha) das variáveis em estudo. (parte 3)"}
+v13<-round(prop.table(table(df1$Fx_IMC,df$fisicamente_ativo),1)*100,2)
+v14<-round(prop.table(table(df1$Fx_P2,df$fisicamente_ativo),1)*100,2)
+v15<-round(prop.table(table(df1$Fx_P5,df$fisicamente_ativo),1)*100,2)
+
+g12<-grafbarcomb(d = v12,legx = "Faixa etária",legy = "Percentual de alunos por Faixa etária",legl = "Fisicamente Ativo:")
+g13<-grafbarcomb(d = v14,legx = "P2",legy = "Percentual de alunos por P2",legl = "Fisicamente Ativo:")
+g14<-grafbarcomb(d = v15,legx = "P5",legy = "Percentual de alunos por P5",legl = "Fisicamente Ativo:")
+g15<-grafbarcomb(d = v13,legx = "IMC",legy = "Percentual de alunos por IMC",legl = "Fisicamente Ativo:")
+
+cowplot::plot_grid(g12,g13,g14,g15,ncol = 2)
+```
+
+# Testes de hipótese
+
+\ \par
+
+Nesta seção, serão apresentados testes para associação das variáveis em estudo com a variável de desfecho \"Fisicamente ativo\". No qual, para as variáveis qualitativas são apresentados por meio de tabelas os resultados do Teste Exato de Fisher, por conta da baixa quantidade de observações nos subgrupos das variáveis, o teste Qui-quadrado não foi possível utilizá-lo. E para as variáveis quantitatitivas foi realizado o Teste não paramétrico de Mann-Whitney, que é um teste alternativo ao teste paramétrico t-Student para duas médias. Comparando se os grupos Ativos ou Não ativos apresentam alguma diferença em cada variável quantitativa estudada.
+
+A Tabela \ref{tab:tab3} apresenta os resultados para o teste de hipóteses Exato de Fisher, que faz a análise na tabela de contingência para as variáveis qualitativas em relação à pessoa ser fisicamente ativa ou não, buscando evidências para a diferença de distribuição da variável avaliada para os dois grupos. Apesar de ser também uma variável qualitativa, a pergunta 6 não foi testada nessa avaliação, já que haveria forte autocorrelação entre as variáveis, afinal refere-se à carga semanal de atividade física (em dias) e a definição de ser fisicamente ativo depende da carga de atividade física semanal.
+
+Considerando como nível de significância $\alpha = 0.05$, tem-se que há evidências de diferença significativa apenas para a pergunta 3 ("De forma geral, como você considera que está sua saúde física?") segundo o teste Exato de Fisher. Dessa forma, pode-se concluir que há uma autopercepção de melhora na saúde física dos alunos que são fisicamente ativos em relação aos não ativos.
+
+Referente à pergunta 7 ("Quanto você considera importante a prática de atividades físicas na rotina de um estudante?"), esperava-se que haveriam também diferenças entre os dois grupos. Contudo, com um p-valor de $0.84$, existem fortes evidências de que não há associação dessa variável para os grupos fisicamente ativos, ou seja, mesmo pessoas que não são fisicamente ativas acreditam que há importância - mesmo que moderada - para as atividades físicas. 
+
+```{r tab3}
+## TESTES DE ASSOCIAÇÃO PARA VARIÁVEIS QUALITATIVAS (FISHER)
+y_genero <- table(df$Genero, df$fisicamente_ativo)
+y_curso <- table(df$Curso, df$fisicamente_ativo)
+y_p3 <- table(df$P3, df$fisicamente_ativo)
+y_p4 <- table(df$P4, df$fisicamente_ativo)
+y_p7 <- table(df$P7, df$fisicamente_ativo)
+y_p8 <- table(df$P8, df$fisicamente_ativo)
+y_p9 <- table(df$P9, df$fisicamente_ativo)
+y_p11 <- table(df$P11, df$fisicamente_ativo)
+y_p12 <- table(df$P12, df$fisicamente_ativo)
+y_p13 <- table(df$P13, df$fisicamente_ativo)
+y_imc <- table(df$IMC, df$fisicamente_ativo)
+
+t_genero <- fisher.test(y_genero, alternative = "two.sided")
+t_curso <- fisher.test(y_curso, alternative = "two.sided")
+t_p3 <- fisher.test(y_p3, alternative = "two.sided")
+t_p4 <- fisher.test(y_p4, alternative = "two.sided")
+t_p7 <- fisher.test(y_p7, alternative = "two.sided")
+t_p8 <- fisher.test(y_p8, alternative = "two.sided")
+t_p9 <- fisher.test(y_p9, alternative = "two.sided")
+t_p11 <- fisher.test(y_p11, alternative = "two.sided")
+t_p12 <- fisher.test(y_p12, alternative = "two.sided")
+t_p13 <- fisher.test(y_p13, alternative = "two.sided")
+t_imc <- fisher.test(y_imc, alternative = "two.sided")
+
+testes <- c(rep("Fisher", 11))
+p_valor <- c(t_genero$p.value, t_curso$p.value, t_p3$p.value, t_p4$p.value,
+             t_p7$p.value, t_p8$p.value, t_p9$p.value, t_p11$p.value, 
+             t_p12$p.value, t_p13$p.value, t_imc$p.value)
+
+H0<-c(rep("Não tem assoc.", 11))
+H1<-c(rep("Tem assoc.", 11))
+conclusao <- c(ifelse(p_valor <= 0.05,
+                      "Há evidências de associação", 
+                      "Não há evidências de associação"))
+
+comb<-c("Gênero", "Curso", "P3", "P4",
+        "P7", "P8", "P9", "P11",
+        "P12", "P13", "IMC")
+
+tabela<-matrix()
+tabela<-cbind(comb,testes,H0,H1,round(p_valor,3), conclusao)
+colnames(tabela)<-c("Associações","Testes","H0","H1","P-valor", "Conclusão")
+
+tabela %>% 
+  knit_kable(caption = "Tabela dos resultados de testes de associação para variáveis qualitativas em relação para os grupos fisicamente ativos.")
+```
+
+Na Tabela \ref{tab:tab4} encontram-se os resultados para o teste não-paramétrico de Mann-Whitney, que testa se há diferenças entre os grupos fisicamente ativos para as variáveis quantitativas contidas na pesquisa. Assim como para o teste Exato de Fisher, houve a remoção da variável que teria autocorrelação com ser fisicamente ativo ou não, nesse caso a pergunta 5 que refere-se à carga semanal de atividade física em horas.
+
+Novamente, considerando o nível de significância $\alpha = 0.05$, tem-se que não há evidências de diferenças significativas para os grupos fisicamente ativo ou não, para todas as variáveis quantitativas testadas. Nesse caso, as variáveis físicas (idade, altura e peso) não apresentam diferenças para os dois grupos, assim como a pergunta 2 ("Quantas horas semanais você trabalha?").
+
+```{r tab4}
+## Teste Mann-Whitney para as variáveis quantitativas
+df %>% 
+  select(Idade, Altura, Peso, P2, fisicamente_ativo) %>% 
+  tidyr::pivot_longer(cols = !fisicamente_ativo,
+                      names_to = "Variável",
+                      values_to = "valor") %>% 
+  dplyr::group_by(`Variável`) %>% 
+  dplyr::do(w = wilcox.test(valor ~ fisicamente_ativo, data = .)) %>% 
+  dplyr::summarise(`Variável`, 
+                   `P-Valor` = round(w$p.value, 4), 
+                   `Estatística U` = round(w$statistic, 4)) %>% 
+  dplyr::mutate(Conclusão = ifelse(`P-Valor` <= 0.05, 
+                                   "Há evidências de diferença", 
+                                   "Não há evidências de diferença")) %>% 
+  knit_kable(caption = "Teste Mann-Whitney para as variáveis quantitativas em relação aos grupos fisicamente ativos.")
+```
+
+# Atividades
+
+Nesta seção, apresentaremos os resultados referentes à pergunta P10 ("Caso a resposta na pergunta anterior tenha sido \"Sim\" ou \"Talvez\", quais atividades você participaria?"). Todos os resultados estão presentes na Figura \ref{fig:sugs}, na qual em vermelho estão as duas atividades mais votadas, vôlei e futebol, com 14 votos cada. Em azul estão outras duas atividades com votos consideráveis, sendo elas atletismo com 9 votos e handebol com 5 votos. Por fim, as outras atividades menos relevantes com 1 ou 2 votos em cinza.
+
+Portanto, essas 4 atividades (Vôlei, Futebol, Atletismo, Handebol) são essenciais terem em uma possível criação de alguma competição desportiva entre os cursos do CCNE. Ficando como sugestão ao centro do CCNE, já que segundo nosso banco de dados 63% destes alunos participariam.
+
+
+
+```{r sugs,fig.cap="Sugestôes de atividades mais escolhidas."}
+## Gráfico para as sugestões de atividades/competições
+df %>% 
+  select(P10) %>% 
+  filter(!is.na(P10)) %>% 
+  tidyr::separate(col = P10, sep = ",", 
+                  into = c("atv1", "atv2", "atv3", "atv4", "atv5")) %>% 
+  tidyr::pivot_longer(cols = everything(), 
+                      names_to = "rm",
+                      values_to = "atividades") %>% 
+  select(-rm) %>% 
+  filter(!is.na(atividades),
+         !atividades %in% c(" Truco", " E-Sports", " Xadrez", "Truco",
+                              " Jogos de Carta sem ser Truco")) %>% 
+  mutate(atividades = stringr::str_trim(atividades),
+         atividades = stringr::str_to_sentence(atividades)) %>% 
+  mutate(atividades = recode(atividades, Corrida = "Atletismo")) %>%
+  group_by(atividades) %>% 
+  mutate(n = n()) %>% 
+  ggplot() +
+  geom_bar(aes(x = reorder(atividades, n),fill = atividades),
+           color = "white") +
+  labs(x = "Sugestão de Atividade", 
+       y = "Frequência") +
+  scale_fill_manual(values = c('Vôlei' = "darkred", 'Futebol' = "darkred",
+                               'Atletismo'= "darkblue", 'Handebol' = "darkblue")) +
+  guides(fill = "none") +
+  coord_flip() +
+  theme_minimal()+
+  geom_text(aes(x = atividades, y = n,label = round(n,2)),hjust = -0.35,size=3.2)
+```
+
+# Conclusões
+
+\ \par
+
+Com a presente pesquisa foi possível definir dois grupos dentre os alunos: aqueles fisicamente ativos e aqueles fisicamente não-ativos, de acordo com a carga semanal de atividades físicas de cada aluno. Então, por meio de análise descritiva com métricas centrais e de posição e frequências absolutas e relativas dispostas em tabelas, com visualização gráfica e aplicação de testes de hipóteses, foi analisado se houve diferença entre esses grupos de fisicamente ativos.
+	Conclui-se, portanto, que 71.43% dos alunos do Centro de Ciências Naturais e Exatas (CCNE) que responderam corretamente às perguntas (35 alunos), podem ser considerados fisicamente ativos. Por meio das análises descritivas notamos também que altura e idade não apresentaram diferenças entre os alunos fisicamente ativos ou não ativos.
+	Por sua vez, na análise com as marginais linhas percebemos, apesar de ocorrerem subgrupos com pouquíssimos ou até nenhuma observação - assim prejudicando as análises - que a variável descritiva referente ao curso apresentou proporção similar para alunos ativos ou não ativos, assim como a pergunta 11 (refente à utilização do campus para atividades físicas) apresentou que utilizar ou não área da UFSM era similar em proporções para a variável resposta. No que diz respeito a gênero, visualizou-se que o gênero masculino é mais fisicamente ativo que o gênero feminino, porém a baixa quantidade de observações no banco de dados pode afetar essa relação. A diferença mais discrepante na análise com marginais linhas estava na pergunta 1 (referente ao tempo de sono), onde nota-se que pessoas que dormem 10 horas ou mais, são consideradas não ativas.
+	Quanto ao IMC, foi identificada uma larga porção de alunos com valores abaixo ou acima dos ideais, contudo nenhum extremamente excedente. É considerado, assim, que possivelmente poderia haver melhora na qualidade de sáude dos alunos caso praticassem alguma forma de atividade física. Sobre a importância de atividades físicas dadas pelos alunos, houve maioria de alunos que consideram atividades físicas importantes ou muito importantes. 
+	Além disso, nos testes de hipóteses aplicados - Teste Exato de Fisher e Teste não paramétrico de Mann-Whitney - percebemos que a pergunta 3 (“De forma geral, como você considera que está sua saúde física?”) apresentou evidência de associação com a variável resposta, assim conclui-se que há uma autopercepção de melhora na saúde física dos alunos que são fisicamente ativos em relação aos não ativos, sendo esta uma informação obtida pelo Teste Exato de Fisher. Já o Teste não paramétrico de Mann-Whitney, não apresentou diferença significativa para os grupos fisicamente ativos ou não ativos em relação às variáveis quantitativas analisadas.
+	No que tange a pergunta 10 (quais atividades o aluno participaria), vôlei e futebol foram as atividades com maior interesse de participação dos alunos do CCNE, mostrando que seja quem participou de campeonatos ou não, possui principal interesse nesses esportes, com cerca de 57,14% das respostas. 
+	Assim sendo, houveram, infelizmente, poucas respostas ao questionário e isso pode prejudicar a qualidade inferencial para todo o CCNE, como era o objetivo dessa pesquisa, especialmente por haverem apenas respostas para dois cursos e ambos de turno noturno. Assim, uma pesquisa que fosse capaz de captar uma maior quantidade de entrevistados e respostas aptas para a análise seria de grande valia para a qualidade e robustez das possíveis inferências e decisiva para a constatação do nível atual de saúde física dentre os alunos do CCNE.
+
+# Referências
+\ \par
+
+MATSUDO, S. Classificação do nível de atividade física IPAQ. \textbf{Centro Coordenador do IPAQ no Brasil-Celafiscs}, v. 42299643, 2007.
+
+\vspace{0.1cm}
+
+Ciconelli RM, Ferra, MB, Santos W, Meinão I, Quaresma MR. Tradução para a língua portuguesa e validação do questionário genérico de avaliação de qualidade de vida SF-36 (Brasil SF-36). \textbf{Rev Bras Reumatol}.1999;39(3):143-50.
+
+\vspace{0.1cm}
+
+MACEDO, C. de S. G.; GARAVELLO, J. J.; OKU, E. C.; MIYAGUSUKU, F. H.; AGNOLL, P. D.; NOCETTI, P. M. BENEFÍCIOS DO EXERCÍCIO FÍSICO PARA A QUALIDADE DE VIDA. \textbf{Revista Brasileira de Atividade Física e Saúde}. [S. l.], v. 8, n. 2, p. 19–27, 2012. DOI: 10.12820/rbafs.v.8n2p19-27. Disponível em: https://rbafs.org.br/RBAFS/article/view/875. Acesso em: 4 dez. 2022.
+
+\newpage
+
+\section*{Apêndice}
+
+Questionário:
+
+\vspace{0.3cm}
+
+\textbf{Identificação:}
+
+\par
+	1. Sexo
+	
+() Masculino 
+() Feminino
+
+  2. Curso:
+  
+() ABI - Ciências Biológicas
+() Estatística
+() Geografia
+() Meteorologia
+() Química
+() Ciências Biológicas
+() Física
+() Matemática
+() Processos Químicos
+() Química Industrial
+
+ 3. Turno do curso:
+
+() Diurno
+() Noturno
+
+\par
+	4. Idade:
+	
+Número inteiro
+
+\par
+	5. Altura: (em cm)
+	
+Número decimal
+
+\par
+	6. Peso: (em kg)
+	
+Número decimal
+
+\par
+	7. Em média, quantas horas você dorme por dia?
+	
+() 3 horas ou menos
+() 4-5 horas
+() 6-7 horas
+() 8-9 horas
+() 10 horas ou mais
+
+\par
+	8. Quantas horas semanais você trabalha? (Podendo somar emprego e/ou bolsa)
+	
+Número decimal
+
+\par
+	9. De forma geral, sua saúde está
+	
+() Excelente
+() Muito boa
+() Boa
+() Regular
+() Ruim
+
+\vspace{0.3cm}
+
+\textbf{Específicas:}
+
+\par
+10. Você faz parte de algum tipo de grupo de atividades físicas, como atléticas e etc?
+
+() Sim
+() Não
+
+\par
+11. Qual sua carga semanal de atividades física? (em horas)
+
+Número decimal
+
+\par
+12. Quantas vezes na semana você prática algum tipo de atividades fisica?
+
+() Uma
+() Duas
+() Três
+() Quatro
+() Cinco
+() Seis
+() Todos os dias
+
+\par
+13. De 1 a 5, quanto você acha importante a prática de exercícios físicos? (sendo 4 de maior importância)
+
+() 1
+() 2
+() 3
+() 4
+() 5
+
+\par
+14. De 1 a 5, quanto você acredita que os exercícios físicos são importantes para sua vida/saúde? (sendo 4 de maior importância)
+
+() 1
+() 2
+() 3
+() 4
+() 5
+
+\par
+15. Você já participou de alguma competição esportiva?
+
+() Sim
+() Não
+
+\par
+16. Você participaria de alguma competição esportiva caso existisse dentro do CCNE/UFSM? Como por exemplo, olimpiadas entre os cursos do CCNE, entre os centros da UFSM, etc) 
+
+() Sim
+() Não
+
+\par
+17. Caso "Sim" na resposta anterior (18.), qual(is) atividade(s) você gostaria de participar?
+
+() Vôlei
+() Basquete
+() Futebol
+() Corrida
+() Handebol
+() Outra. Qual? _________ (Resposta) 
+
+\par
+18. Você utiliza alguma área destinada a atividades físicas no campos da UFSM?
+
+() Sim
+() Não
+
+\par
+19. Você gostaria que existisse mais áreas destinadas ao exercício físico no campos da UFSM?
+
+() Sim
+() Não
+
+\par
+20. Você tem algum problema de saúde ou físico que o impeça ou dificulte a realização de atividades físicas?
+
+() Sim
+() Não
+
